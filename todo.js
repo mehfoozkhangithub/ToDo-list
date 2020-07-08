@@ -1,15 +1,13 @@
 var btn;
+let toggler = false;
 
 function addTodo() {
     //value from input box
-    var itemName = document.getElementById("name").value;
+    var itemName = document.getElementById("name");
+    
     //creating element
     var div = document.createElement("div");
-    div.style.border = "1px solid black";
-    div.style.width = "400px";
-    div.style.height = "150px";
-    div.style.color = "white";
-    div.style.backgroundColor = "teal";
+    div.setAttribute('class','box')
 
     var checkBox = document.createElement("input");
     checkBox.setAttribute("type", "checkbox");
@@ -18,7 +16,7 @@ function addTodo() {
     checkBox.addEventListener("click", completedList);
 
     var p = document.createElement("p");
-    p.textContent = itemName;
+    p.textContent = itemName.value;
     p.style.float = "left";
     var btn = document.createElement("button");
     btn.textContent = "Remove";
@@ -39,6 +37,7 @@ function addTodo() {
     div.append(checkBox, p, edit, btn);
 
     renderDom(div);
+    itemName.textContent=""
 }
 
 editItem = () => {
@@ -73,6 +72,31 @@ updateItem = () => {
     parent.insertBefore(p, target);
 };
 
+// getToggle = (toggler) => {
+    
+// }
+
+
+showCompleted = () => {
+    let completed = document.getElementById("complete")
+    let toggle = document.getElementById('toggle')
+    
+    if (toggler) {
+        completed.style.display = 'block'
+        toggle.textContent="Hide List"
+        toggler=false
+    }
+    else {
+        completed.style.display = "none"
+        toggle.textContent="Show List"
+        toggler=true
+    }
+    
+
+}
+
+
+
 completedList = () => {
     var complete = document.getElementById("complete");
     var display = event.target.parentElement;
@@ -93,4 +117,6 @@ renderDom = (element) => {
 window.addEventListener("load", function () {
     btn = document.getElementById("submit");
     btn.addEventListener("click", addTodo);
+    let toggle = document.getElementById('toggle')
+    toggle.addEventListener('click',showCompleted)
 });
